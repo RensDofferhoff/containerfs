@@ -1,4 +1,4 @@
-Package: fs_container
+Package: containerFs
 Title: Cross-Platform File System Operations Based on 'libuv'
 Version: 1.6.6.9000
 Authors@R: c(
