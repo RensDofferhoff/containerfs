@@ -207,7 +207,7 @@ int uv_fs_event_start(uv_fs_event_t* handle,
      /* path is a directory, so that's the directory that we will watch. */
 
     /* Convert to long path. */
-    size = GetLongPathNameW(pathw, NULL, 0);
+    size = GetFullPathNameW(pathw, 0, NULL, NULL);
 
     if (size) {
       long_path = (WCHAR*)uv__malloc(size * sizeof(WCHAR));
@@ -215,7 +215,7 @@ int uv_fs_event_start(uv_fs_event_t* handle,
         uv_fatal_error(ERROR_OUTOFMEMORY, "uv__malloc");
       }
 
-      size = GetLongPathNameW(pathw, long_path, size);
+      size = GetFullPathNameW(pathw, size, long_path, NULL);
       if (size) {
         long_path[size] = '\0';
       } else {
@@ -494,7 +494,7 @@ void uv__process_fs_event_req(uv_loop_t* loop, uv_req_t* req,
               filenamew[size - 1] = L'\0';
 
               /* Convert to long name. */
-              size = GetLongPathNameW(filenamew, NULL, 0);
+              size = GetFullPathNameW(filenamew, 0, NULL, NULL);
 
               if (size) {
                 long_filenamew = (WCHAR*)uv__malloc(size * sizeof(WCHAR));
@@ -502,7 +502,7 @@ void uv__process_fs_event_req(uv_loop_t* loop, uv_req_t* req,
                   uv_fatal_error(ERROR_OUTOFMEMORY, "uv__malloc");
                 }
 
-                size = GetLongPathNameW(filenamew, long_filenamew, size);
+                size = GetFullPathNameW(filenamew, size, long_filenamew, NULL);
                 if (size) {
                   long_filenamew[size] = '\0';
                 } else {
